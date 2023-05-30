@@ -7,6 +7,7 @@ import {
   ErrorText,
   StyledButton,
   Title,
+  InputWrapper,
 } from './Phonebook.styled';
 
 class Phonebook extends Component {
@@ -20,15 +21,26 @@ class Phonebook extends Component {
       <Formik
         initialValues={{ name: '', number: '' }}
         validationSchema={Yup.object().shape({
-          name: Yup.string().required('Name is required'),
-          number: Yup.string().required('Phone number is required'),
+          name: Yup.string()
+            .matches(
+              /^[A-Z][a-zA-Z]*( [A-Z][a-zA-Z]*)+$/,
+              'Name must consist of two or more words separated by a space, where each word starts with a capital letter'
+            )
+            .required('Name is required'),
+          number: Yup.string()
+            .required('Phone number is required')
+            .matches(/^\+/, 'Phone number must start with a "+" symbol')
+            .matches(
+              /^[+]\d+$/,
+              'Phone number must contain only digits after the "+" symbol'
+            ),
         })}
         onSubmit={this.handleSubmit}
       >
         {({ handleSubmit, errors, touched }) => (
           <form onSubmit={handleSubmit}>
             <Title>Phonebook</Title>
-            <div>
+            <InputWrapper>
               <StyledLabel htmlFor="name">Name</StyledLabel>
               <Field as={StyledInput} type="text" name="name" />
               <ErrorMessage
@@ -36,8 +48,8 @@ class Phonebook extends Component {
                 component={ErrorText}
                 className="error"
               />
-            </div>
-            <div>
+            </InputWrapper>
+            <InputWrapper>
               <StyledLabel htmlFor="number">Phone</StyledLabel>
               <Field as={StyledInput} type="text" name="number" />
               <ErrorMessage
@@ -45,7 +57,7 @@ class Phonebook extends Component {
                 component={ErrorText}
                 className="error"
               />
-            </div>
+            </InputWrapper>
             <StyledButton type="submit">Add contact</StyledButton>
           </form>
         )}

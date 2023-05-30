@@ -5,6 +5,8 @@ export const StyledFilterContainer = styled.div`
 `;
 
 export const StyledFilterHeading = styled.h2`
+  font-size: 20px;
+  font-weight: 700;
   margin-bottom: 10px;
 `;
 

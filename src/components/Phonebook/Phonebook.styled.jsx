@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const InputWrapper = styled.div`
+  margin-bottom: 20px;
+`;
+
 export const Title = styled.h1`
   margin-bottom: 20px;
   font-size: 32px;
@@ -27,7 +31,6 @@ export const ErrorText = styled.div`
 `;
 
 export const StyledButton = styled.button`
-  margin-top: 10px;
   padding: 8px 16px;
   font-size: 16px;
   background-color: #007bff;
