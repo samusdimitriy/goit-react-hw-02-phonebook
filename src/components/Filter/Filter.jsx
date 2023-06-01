@@ -1,29 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   StyledFilterContainer,
   StyledFilterInput,
   StyledFilterHeading,
 } from './Filter.styled';
 
-class Filter extends Component {
-  handleChange = e => {
-    const { value } = e.target;
-    this.props.onChange(value);
+const Filter = ({ filter, onChange }) => {
+  const handleChange = e => {
+    onChange(e.target.value);
   };
 
-  render() {
-    return (
-      <StyledFilterContainer>
-        <StyledFilterHeading>Find contacts by name</StyledFilterHeading>
-        <StyledFilterInput
-          type="text"
-          name="filter"
-          onChange={this.handleChange}
-          value={this.props.filter}
-        />
-      </StyledFilterContainer>
-    );
-  }
-}
+  return (
+    <StyledFilterContainer>
+      <StyledFilterHeading>Find contacts by name</StyledFilterHeading>
+      <StyledFilterInput
+        type="text"
+        name="filter"
+        onChange={handleChange}
+        value={filter} // Исправлено: использовать filter вместо this.props.filter
+      />
+    </StyledFilterContainer>
+  );
+};
 
 export default Filter;

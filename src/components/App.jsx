@@ -1,17 +1,37 @@
-// App.jsx
 import React, { Component } from 'react';
+import { nanoid } from 'nanoid';
 import Phonebook from './Phonebook/Phonebook';
 import Contacts from './Contacts/Contacts';
 import { AppContainer } from './App.styled';
 
 class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
+    filter: '',
+    filteredContacts: [],
+  };
+
+  componentDidMount() {
+    this.filterContacts();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      this.filterContacts();
+    }
+  }
+
+  handleChange = value => {
+    this.setState({ filter: value }, this.filterContacts);
+  };
+
+  filterContacts = () => {
+    const { filter, contacts } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+    const filteredContacts = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+    this.setState({ filteredContacts });
   };
 
   addContact = ({ name, number }) => {
@@ -23,7 +43,7 @@ class App extends Component {
       return;
     }
 
-    const newContact = { name, number };
+    const newContact = { id: nanoid(), name, number };
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact],
     }));
@@ -36,11 +56,16 @@ class App extends Component {
   };
 
   render() {
-    const { contacts } = this.state;
+    const { filteredContacts } = this.state;
     return (
       <AppContainer>
         <Phonebook onSubmit={this.addContact} />
-        <Contacts contacts={contacts} onDelete={this.onDelete} />
+        <Contacts
+          filter={this.state.filter}
+          filteredContacts={filteredContacts}
+          onChange={this.handleChange}
+          onDelete={this.onDelete}
+        />
       </AppContainer>
     );
   }
