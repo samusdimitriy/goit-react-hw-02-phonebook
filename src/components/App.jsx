@@ -8,30 +8,10 @@ class App extends Component {
   state = {
     contacts: [],
     filter: '',
-    filteredContacts: [],
   };
-
-  componentDidMount() {
-    this.filterContacts();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.contacts !== this.state.contacts) {
-      this.filterContacts();
-    }
-  }
 
   handleChange = value => {
-    this.setState({ filter: value }, this.filterContacts);
-  };
-
-  filterContacts = () => {
-    const { filter, contacts } = this.state;
-    const normalizedFilter = filter.toLowerCase();
-    const filteredContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-    this.setState({ filteredContacts });
+    this.setState({ filter: value });
   };
 
   addContact = ({ name, number }) => {
@@ -56,13 +36,14 @@ class App extends Component {
   };
 
   render() {
-    const { filteredContacts } = this.state;
+    const { contacts, filter } = this.state;
+
     return (
       <AppContainer>
         <Phonebook onSubmit={this.addContact} />
         <Contacts
-          filter={this.state.filter}
-          filteredContacts={filteredContacts}
+          contacts={contacts}
+          filter={filter}
           onChange={this.handleChange}
           onDelete={this.onDelete}
         />

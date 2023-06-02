@@ -17,7 +17,7 @@ const Filter = ({ filter, onChange }) => {
         type="text"
         name="filter"
         onChange={handleChange}
-        value={filter} // Исправлено: использовать filter вместо this.props.filter
+        value={filter}
       />
     </StyledFilterContainer>
   );

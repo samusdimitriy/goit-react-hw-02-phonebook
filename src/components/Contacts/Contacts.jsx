@@ -1,6 +1,5 @@
 import React from 'react';
 import Filter from '../Filter/Filter';
-import { nanoid } from 'nanoid';
 import {
   StyledContactsContainer,
   StyledContactsHeading,
@@ -10,14 +9,18 @@ import {
   StyledDeleteButton,
 } from './Contacts.styled';
 
-const Contacts = ({ filter, onChange, filteredContacts, onDelete }) => {
+const Contacts = ({ contacts, filter, onChange, onDelete }) => {
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
   return (
     <StyledContactsContainer>
       <StyledContactsHeading>Contacts</StyledContactsHeading>
       <Filter filter={filter} onChange={onChange} />
       <ul>
         {filteredContacts.map(contact => (
-          <StyledContactItem key={nanoid()}>
+          <StyledContactItem key={contact.id}>
             <StyledContactName>{contact.name}:</StyledContactName>
             <StyledContactNumber>{contact.number}</StyledContactNumber>
             <StyledDeleteButton
