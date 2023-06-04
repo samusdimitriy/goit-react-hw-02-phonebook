@@ -3,6 +3,11 @@ import { nanoid } from 'nanoid';
 import Phonebook from './Phonebook/Phonebook';
 import Contacts from './Contacts/Contacts';
 import { AppContainer } from './App.styled';
+import Filter from './Filter/Filter';
+import {
+  StyledContactsHeading,
+  StyledContactNumber,
+} from './Contacts/Contacts.styled';
 
 class App extends Component {
   state = {
@@ -35,18 +40,33 @@ class App extends Component {
     }));
   };
 
-  render() {
+  filteredContacts = () => {
     const { contacts, filter } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  };
+
+  render() {
+    const { filter } = this.state;
 
     return (
       <AppContainer>
         <Phonebook onSubmit={this.addContact} />
-        <Contacts
-          contacts={contacts}
-          filter={filter}
-          onChange={this.handleChange}
-          onDelete={this.onDelete}
-        />
+        <StyledContactsHeading>Contacts</StyledContactsHeading>
+
+        <Filter filter={filter} onFilterChange={this.handleChange} />
+        {(this.state.contacts.length < 1 && filter.length > 0) ||
+        this.state.contacts.length < 1 ? (
+          <p>Your phonebook is empty. Please add contact.</p>
+        ) : (
+          <Contacts
+            contacts={this.filteredContacts()}
+            onDelete={this.onDelete}
+          />
+        )}
       </AppContainer>
     );
   }

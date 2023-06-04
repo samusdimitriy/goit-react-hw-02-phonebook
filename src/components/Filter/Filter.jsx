@@ -5,9 +5,9 @@ import {
   StyledFilterHeading,
 } from './Filter.styled';
 
-const Filter = ({ filter, onChange }) => {
-  const handleChange = e => {
-    onChange(e.target.value);
+const Filter = ({ filter, onFilterChange }) => {
+  const handleChange = event => {
+    onFilterChange(event.target.value);
   };
 
   return (
@@ -16,8 +16,8 @@ const Filter = ({ filter, onChange }) => {
       <StyledFilterInput
         type="text"
         name="filter"
-        onChange={handleChange}
         value={filter}
+        onChange={handleChange}
       />
     </StyledFilterContainer>
   );

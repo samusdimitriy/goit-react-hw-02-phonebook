@@ -1,25 +1,17 @@
 import React from 'react';
-import Filter from '../Filter/Filter';
 import {
   StyledContactsContainer,
-  StyledContactsHeading,
   StyledContactItem,
   StyledContactName,
   StyledContactNumber,
   StyledDeleteButton,
 } from './Contacts.styled';
 
-const Contacts = ({ contacts, filter, onChange, onDelete }) => {
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
-
+const Contacts = ({ contacts, onDelete }) => {
   return (
     <StyledContactsContainer>
-      <StyledContactsHeading>Contacts</StyledContactsHeading>
-      <Filter filter={filter} onChange={onChange} />
       <ul>
-        {filteredContacts.map(contact => (
+        {contacts.map(contact => (
           <StyledContactItem key={contact.id}>
             <StyledContactName>{contact.name}:</StyledContactName>
             <StyledContactNumber>{contact.number}</StyledContactNumber>

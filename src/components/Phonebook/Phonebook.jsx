@@ -36,7 +36,7 @@ const Phonebook = ({ onSubmit }) => {
       })}
       onSubmit={handleSubmit}
     >
-      {({ handleSubmit, errors, touched }) => (
+      {({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <Title>Phonebook</Title>
           <InputWrapper>
