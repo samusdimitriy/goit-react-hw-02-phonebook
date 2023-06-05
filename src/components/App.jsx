@@ -4,10 +4,7 @@ import Phonebook from './Phonebook/Phonebook';
 import Contacts from './Contacts/Contacts';
 import { AppContainer } from './App.styled';
 import Filter from './Filter/Filter';
-import {
-  StyledContactsHeading,
-  StyledContactNumber,
-} from './Contacts/Contacts.styled';
+import { StyledContactsHeading } from './Contacts/Contacts.styled';
 
 class App extends Component {
   state = {
